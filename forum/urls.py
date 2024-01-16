@@ -1,10 +1,17 @@
 from django.urls import path,include
 from forum import views
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
-    path('forum/', views.PostList.as_view()),
-    path('forum/<int:pk>', views.PostDetail.as_view()),
+    path('posts/', views.PostList.as_view()),
+    path('posts/create/', views.PostCreate.as_view()),
+    path('posts/<int:pk>', views.PostDetail.as_view()),
     path('users/', views.UserList.as_view()),
     path('users/<int:pk>', views.UserDetail.as_view()),
+    path('api/token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
 ]
