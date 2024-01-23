@@ -1,21 +1,18 @@
 from forum.models import Post,CustomUser
 from forum.serializers import PostSerializer,UserSerializer,MyTokenObtainPairSerializer
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions,status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.authentication import SessionAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simple_api_key.permissions import IsActiveEntity
-
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.request import Request
-from rest_framework.exceptions import PermissionDenied
 from rest_framework_simple_api_key.backends import APIKeyAuthentication
 from rest_framework_simple_api_key.permissions import IsActiveEntity
+from rest_framework_simple_api_key.models import APIKey
  
-from rest_framework.authentication import SessionAuthentication
-from django.contrib.auth import authenticate
+
+
 
 
 
@@ -29,9 +26,6 @@ class PostList(generics.ListAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
    
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
-
 
 
 class PostCreate(generics.CreateAPIView):
@@ -57,29 +51,22 @@ class UserListCreate(generics.ListCreateAPIView):
     serializer_class = UserSerializer
 
     
-    def create_api_key(self, request, *args, **kwargs):
-        customUser = self.get_object()
-        _, key = UserAPIKey.objects.create_api_key(name=" Api Key", entity=customUser)
-        
+    def create_api_key(self, custom_user):
+        obj, key = APIKey.objects.create_api_key(entity=custom_user)  # Adjust the method call based on your actual implementation
+        return {"key": key}
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        # Create the user first
         self.perform_create(serializer)
 
-        # Retrieve the created user's ID
-        user_id = serializer.instance.id
+        custom_user = serializer.instance
 
-        # Use the retrieved user ID to create the API key
-        try:
-            custom_user = CustomUser.objects.get(pk=user_id)
-            result = self.create_api_key(custom_user)
-            headers = self.get_success_headers(serializer.validated_data)
-            return Response(result, status=status.HTTP_201_CREATED, headers=headers)
-        except CustomUser.DoesNotExist:
-            return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+        result = self.create_api_key(custom_user)
+
+        headers = self.get_success_headers(serializer.validated_data)
+        return Response(result, status=status.HTTP_201_CREATED, headers=headers)
 
         
 

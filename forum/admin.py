@@ -8,5 +8,5 @@ class CustomUserAdmin(UserAdmin):
  
 admin.site.register(Post)
 admin.site.register(CustomUser, CustomUserAdmin)
-#admin.site.register(UserAPIKey)
+
 
