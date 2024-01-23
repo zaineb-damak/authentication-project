@@ -23,10 +23,10 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'email', 'api_key', 'posts']
+        fields = ['id', 'username', 'password','email', 'posts', 'api_keys']
 
     def get_posts(self, obj):
-        # Retrieve the posts related to the user (assuming you have a related name in your Post model)
+        # Retrieve the posts related to the user 
         posts = obj.post_set.all()
         # Serialize the posts using the PostSerializer
         serializer = PostSerializer(posts, many=True)
