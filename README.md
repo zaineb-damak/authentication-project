@@ -40,23 +40,23 @@ Post: Fields - title, content, author (foreign key to User), and created_at.
 
 API Endpoints:
 
-/posts/: GET request returns a list of all posts. JWT authentication.
+`/posts/`: GET request returns a list of all posts. JWT authentication.
 
-/posts/<id>/: GET request returns a single post by id. API key authentication.
+`/posts/<id>/`: GET request returns a single post by id. API key authentication.
 
-/posts/create/: POST request creates a new post. User session authentication.
+`/posts/create/`: POST request creates a new post. User session authentication.
 
-/users/: GET request returns list of all users and POST request creates a new user
+`/users/`: GET request returns list of all users and POST request creates a new user
 
-/uesre/<id>/: GET request returns a single user.
+`/uesre/<id>/`: GET request returns a single user.
 
 # Authentication
 
 Use tools like Postman or curl to test the API endpoints with different authentication methods:
 
-Obtain a JWT token: Send a POST request to /api/token/ with your username and password.
+Obtain a JWT token: Send a POST request to `/api/token/` with your username and password.
 
-Obtain an API key: Access the admin site at /admin/ and create a new API key object for your user.
+Obtain an API key: Access the admin site at `/admin/` and create a new API key object for your user.
 
-Obtain a user session: Send a POST request to /login/ with your username and password.
+
 
