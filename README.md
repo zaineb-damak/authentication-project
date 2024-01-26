@@ -48,7 +48,7 @@ API Endpoints:
 
 `/users/`: GET request returns list of all users and POST request creates a new user
 
-`/uesre/<id>/`: GET request returns a single user.
+`/users/<id>/`: GET request returns a single user.
 
 # Authentication
 
