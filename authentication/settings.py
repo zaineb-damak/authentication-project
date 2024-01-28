@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    "rest_framework_api_key",
     "rest_framework_simple_api_key",
 ]
 
@@ -99,9 +100,6 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
-SIMPLE_API_KEY = {
-    "FERNET_SECRET": os.environ.get("FERNET_SECRET"),
-}
 
 ROOT_URLCONF = 'authentication.urls'
 

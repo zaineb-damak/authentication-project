@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
-from rest_framework_simple_api_key.models import AbstractAPIKey
 from forum.managers import CustomUserManager
 
 
